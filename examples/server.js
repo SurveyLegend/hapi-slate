@@ -1,6 +1,6 @@
-import Hapi from 'hapi'
-import Inert from 'inert'
-import Joi from 'joi'
+import Hapi from '@hapi/hapi'
+import Inert from '@hapi/inert'
+import Joi from '@hapi/joi'
 import { name, version } from '../package'
 import plugin from '../'
 
@@ -340,6 +340,11 @@ const startServer = async () => {
                     'Creates a new `Recipient`. object and verifies the recipient’s identity. Also verifies the recipient’s bank account information or debit card, if either is provided.'
                 ],
                 tags: ['api'],
+                validate: {
+                  query: {
+                    type: Joi.string().only('bank', 'card').description('Account type').required()
+                  }
+                },
                 plugins: {
                     'hapi-docs': {
                         order: 1
